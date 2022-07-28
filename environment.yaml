@@ -1,0 +1,8 @@
+name: phase-out-icev-in-germany
+channels:
+    - conda-forge
+    - bioconda
+dependencies:
+    - python=3.10
+    - flake8=3.8.3
+    - snakemake-minimal=7.8.5
