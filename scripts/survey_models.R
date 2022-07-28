@@ -1,12 +1,4 @@
-### author: Janna Hoppe
-### contact: jhoppe@ethz.ch
-### date: Dec. 2021
-### project: cross-sectional survey of German citizens on their attitudes towards an ICEV phase-out
-
-### Please note that I am a beginner to R, so please excuse my messy/awkward code
-
-##################################################################################################################################################
-
+install.packages("pixiedust", repos = "https://stat.ethz.ch/CRAN/") # cannot be installed using conda at this point
 
 # load packages
 library(tidyverse)    # basic functions
@@ -29,7 +21,7 @@ library(styler)       # tidies up R script
 
 
 # load data
-data <- read.csv("C://Users//jhoppe//polybox//Research//Scripts, summaries, drafts, proposal//Proposal 4, Public opinion on phasing out ICEs//Survey Data//210602SurveyData.csv", 
+data <- read.csv(snakemake@input[["data"]],
                  header = TRUE, 
                  sep = ";")
 
@@ -41,7 +33,7 @@ data <- data %>%
                   v_47, v_48, v_49, v_91, v_51, v_52, v_53, c_0001, v_92, v_96, v_100))
 
 # download dataset with only relevant set of variables, for figshare
-write_xlsx(data, "C://Users//jhoppe//polybox//Research//Scripts, summaries, drafts, proposal//Proposal 4, Public opinion on phasing out ICEs//Survey Data//data_figshare.xlsx")
+write_xlsx(data, snakemake@output[["figshare_data"]])
 
 
 ############################################# clean data #######################################################################################
@@ -419,11 +411,11 @@ confusionMatrix(data = pred, data.imputed$acc)
 
 
 # produce & plot ROC curves of model
-probFull <- predict(BLRmodel, data.imputed, type = "response")
-predictFull <- prediction(probFull, data.imputed$acc)
-perfFull <- performance(predictFull, measure = "tpr", x.measure = "fpr")
+#probFull <- predict(BLRmodel, data.imputed, type = "response")
+#predictFull <- prediction(probFull, data.imputed$acc) # FIXME does not work as probFull is numeric
+#perfFull <- performance(predictFull, measure = "tpr", x.measure = "fpr")
 
-plot(perfFull, col = "blue")
+#plot(perfFull, col = "blue")
 
 
 # calculate McFadden's Pseudo R^2 
@@ -666,34 +658,35 @@ df_treatment_l3 %>%
 str(df_treatment_diff)
 
 ### turn around scales so that increase in value is equivalent to increase in acceptance
-df_treatment_diff <- df_treatment_diff %>% 
-  mutate(diff = differences/-1)
+# FIXME lines 662--683 are broken and therefore commented
+#df_treatment_diff <- df_treatment_diff %>% 
+#  mutate(diff = differences/-1)
 
-df_treatment_diff$diff <- factor(df_treatment_diff$diff)
+#df_treatment_diff$diff <- factor(df_treatment_diff$diff)
 
-df_treatment_diff <- df_treatment_diff %>% 
-  mutate(treatment = ifelse(df_treatment_diff$treatment == "1", "A) Change is inevitable", 
-                            ifelse(df_treatment_diff$treatment == "2", "B) EVs are better than you think", "C) ICEVs are worse than you think")))
+#df_treatment_diff <- df_treatment_diff %>% 
+#  mutate(treatment = ifelse(df_treatment_diff$treatment == "1", "A) Change is inevitable", 
+#                            ifelse(df_treatment_diff$treatment == "2", "B) EVs are better than you think", "C) ICEVs are worse than you think")))
 
-p_treat1 <- ggplot(df_treatment_diff, aes(x = treatment)) +
-  geom_bar(aes(y= (..count..), fill = factor(diff, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5) +
-  scale_fill_manual("Change in \n Likert score", values = c("lightsteelblue1", "lightsteelblue2", "lightsteelblue3", "lightsteelblue4", "gray25", 
-                                                            "coral4", "coral3", "coral2", "coral")) +
-  theme_light() +
-  labs(x = "", y = "N") +
-  theme(axis.text = element_text(size = 22)) +
-  theme(axis.text = element_text(size = 22)) +
-  theme(axis.title.y = element_text(vjust = 0.9, angle = 0, size = 15)) + 
-  theme(legend.title = element_text(size = 20)) +
-  theme(legend.position = "none")
+#p_treat1 <- ggplot(df_treatment_diff, aes(x = treatment)) +
+#  geom_bar(aes(y= (..count..), fill = factor(diff, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5) +
+#  scale_fill_manual("Change in \n Likert score", values = c("lightsteelblue1", "lightsteelblue2", "lightsteelblue3", "lightsteelblue4", "gray25", 
+#                                                            "coral4", "coral3", "coral2", "coral")) +
+#  theme_light() +
+#  labs(x = "", y = "N") +
+#  theme(axis.text = element_text(size = 22)) +
+#  theme(axis.text = element_text(size = 22)) +
+#  theme(axis.title.y = element_text(vjust = 0.9, angle = 0, size = 15)) + 
+#  theme(legend.title = element_text(size = 20)) +
+#  theme(legend.position = "none")
 
-p_treat1
+#p_treat1
 
 
 ############### treatment effect of EC proposal - follow up survey data
 
 # import data of follow-up survey
-df2 <- read.csv("C://Users//jhoppe//polybox//Research//Scripts, summaries, drafts, proposal//Proposal 4, Public opinion on phasing out ICEs//Survey Data//210816SurveyData2.csv", 
+df2 <- read.csv(snakemake@input[["follow_up_data"]], 
                 header = TRUE, 
                 sep = ";")
 
@@ -732,7 +725,7 @@ df2 <- df2 %>%
 
 
 ### import excel file that matches IDs of first and second survey
-df3 <- read_excel("C://Users//jhoppe//polybox//Research//Scripts, summaries, drafts, proposal//Proposal 4, Public opinion on phasing out ICEs//Survey Data//tic_matched3.xlsx")
+df3 <- read_excel(snakemake@input[["tic_matched3"]])
 
 df3 <- df3 %>% 
   filter(tic_2 != "NA")
@@ -837,10 +830,8 @@ df2_l0 %>%
 
 ### combine two plots on treatment effects 
 
-plot_grid(p_treat1, NULL, p_treat2,
-          ncol = 3, nrow = 1, 
-          rel_widths = c(1, .08, 1),
-          labels = c("a.", "", "b."), 
-          label_size =20)
-
-
+#plot_grid(p_treat1, NULL, p_treat2, # FIXME not possible because of problem in line 662
+#          ncol = 3, nrow = 1, 
+#          rel_widths = c(1, .08, 1),
+#          labels = c("a.", "", "b."), 
+#          label_size =20)

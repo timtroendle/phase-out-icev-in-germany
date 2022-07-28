@@ -10,6 +10,17 @@ rule all:
         "build/test-report.html"
 
 
+rule models:
+    input:
+        data = "data/Survey_data.csv",
+        follow_up_data = "data/Survey_data_follow-up.csv",
+        tic_matched3 = "data/tic_matched3.xlsx"
+    output:
+        figshare_data = "build/data_figshare.xlsx"
+    conda: "envs/default.yaml"
+    script: "scripts/survey_models.R"
+
+
 rule dag:
      message: "Plot dependency graph of the workflow."
      output:

@@ -1,9 +1,24 @@
 name: default
 channels:
     - conda-forge
+    - timtroendle # necessary for r-mfx
 dependencies:
-    - python=3.10
-    - numpy=1.22.3
-    - pandas=1.4.1
-    - matplotlib=3.5.1
-    - seaborn=0.11.2
+    - r=4.1
+    - r-tidyverse=1.3.2
+    - r-cowplot=1.1.1
+    - r-randomforest=4.7_1.1
+    - r-hmisc=4.7_0
+    - r-caret=6.0_92
+    - r-e1071=1.7_11
+    - r-rocr=1.0_11
+    - r-margins=0.3.26
+    - r-mfx=1.2_2
+    - r-gmodels=2.18.1
+    # TODO publish pixiedust as conda package
+    - r-ggpubr=0.4.0
+    - r-rstatix=0.7.0
+    - r-broom=1.0.0
+    - r-readxl=1.4.0
+    - r-writexl=1.4.0
+    - r-styler=1.7.0
+    - r-coin=1.4_2
