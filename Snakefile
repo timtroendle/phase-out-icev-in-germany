@@ -21,9 +21,21 @@ rule preprocess:
     script: "scripts/preprocessing.R"
 
 
+rule random_forest:
+    message: "Train a random forest to data."
+    input:
+        data = "build/preprocessed.feather"
+    output:
+        plot = "build/random-forest.png",
+        imputed_data = "build/imputed.feather"
+    conda: "envs/default.yaml"
+    script: "scripts/random_forest.R"
+
+
 rule models:
     input:
         data = "build/preprocessed.feather",
+        imputed_data = "build/imputed.feather",
         follow_up_data = "data/Survey_data_follow-up.csv",
         tic_matched3 = "data/tic_matched3.xlsx"
     output: "build/dummy.feather"
