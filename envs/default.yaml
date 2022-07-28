@@ -22,3 +22,4 @@ dependencies:
     - r-writexl=1.4.0
     - r-styler=1.7.0
     - r-coin=1.4_2
+    - r-arrow=8.0.0

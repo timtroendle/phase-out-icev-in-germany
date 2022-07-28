@@ -5,10 +5,13 @@ root = true
 [*]
 indent_style = space
 indent_size = 4
-trim_trailing_whitespace = false
+trim_trailing_whitespace = true
 insert_final_newline = true
 charset = utf-8
 end_of_line = lf
+
+[*.R]
+trim_trailing_whitespace = false
 
 [LICENSE]
 insert_final_newline = false

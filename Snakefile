@@ -10,13 +10,23 @@ rule all:
         "build/test-report.html"
 
 
+rule preprocess:
+    message: "Preprocess raw survey data."
+    input:
+        data = "data/Survey_data.csv"
+    output:
+        figshare_data = "build/figshare-data.xlsx",
+        preprocessed_data = "build/preprocessed.feather"
+    conda: "envs/default.yaml"
+    script: "scripts/preprocessing.R"
+
+
 rule models:
     input:
-        data = "data/Survey_data.csv",
+        data = "build/preprocessed.feather",
         follow_up_data = "data/Survey_data_follow-up.csv",
         tic_matched3 = "data/tic_matched3.xlsx"
-    output:
-        figshare_data = "build/data_figshare.xlsx"
+    output: "build/dummy.feather"
     conda: "envs/default.yaml"
     script: "scripts/survey_models.R"
 
