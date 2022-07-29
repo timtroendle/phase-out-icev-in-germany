@@ -7,6 +7,9 @@ min_version("7.8")
 rule all:
     message: "Run entire analysis and compile report."
     input:
+        "build/random-forest.png",
+        "build/logistic-regression.png",
+        "build/treatment.png",
         "build/test-report.html"
 
 
@@ -32,15 +35,27 @@ rule random_forest:
     script: "scripts/random_forest.R"
 
 
-rule models:
+rule logistic_regression:
+    message: "Build logistic regression model."
     input:
         data = "build/preprocessed.feather",
         imputed_data = "build/imputed.feather",
+    output:
+        plot = "build/logistic-regression.png"
+    conda: "envs/default.yaml"
+    script: "scripts/logit.R"
+
+
+rule treatments:
+    message: "Test the effect of treatments."
+    input:
+        data = "build/preprocessed.feather",
         follow_up_data = "data/Survey_data_follow-up.csv",
         tic_matched3 = "data/tic_matched3.xlsx"
-    output: "build/dummy.feather"
+    output:
+        plot = "build/treatment.png"
     conda: "envs/default.yaml"
-    script: "scripts/survey_models.R"
+    script: "scripts/treatments.R"
 
 
 rule dag:
