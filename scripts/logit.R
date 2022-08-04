@@ -130,20 +130,27 @@ ME.BLR <- margins(BLRmodel,
 ME.BLR.sum <- summary(ME.BLR, level = 0.95, by_factor = TRUE)
 
 # add variable names and names for different levels of variables, as well as variable categories
-ME.BLR.sum <- cbind(ME.BLR.sum, c("Age \n(R: <30y)", "Age \n(R: <30y)", "Age \n(R: <30y)", "Age \n(R: <30y)", "Child(ren)", "Weekly car use", "Weekly car use", "Weekly car use", "Weekly car use", 
-                                  "Driving license", "Emotional attachment", "Emotional attachment", "Environmental concern", "Environmental concern", "Gender", 
-                                  "Income \n(R: <30'000???)", "Income \n(R: <30'000???)", "Income \n(R: <30'000???)", "Job in car industry", "Location \n(R: urban)", "Location \n(R: urban)", "Approval market liberalism",
-                                  "Approval market liberalism", "No. of pure ICEVs", "Cultural/econ. significance", "Cultural/econ. significance", 
-                                  "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", 
-                                  "Problem attribution", "Problem attribution", "Disapproval regulation", "Disapproval regulation", "Willingn. to abandon car", 
-                                  "Willingn. to abandon car", "Willingn. to adopt EV", "Willingn. to adopt EV"))
+ME.BLR.sum <- cbind(ME.BLR.sum, c(
+    "Age \n(R: <30y)", "Age \n(R: <30y)", "Age \n(R: <30y)", "Age \n(R: <30y)", "Child(ren) \n(R: none)",
+    "Weekly car use\n(R: 0)", "Weekly car use\n(R: 0)", "Weekly car use\n(R: 0)", "Weekly car use\n(R: 0)",
+    "Driving license\n(R: no)", "Emotional attachment\n(R: low)", "Emotional attachment\n(R: low)",
+    "Environmental concern\n(R: low)", "Environmental concern\n(R: low)", "Gender \n(R: female)",
+    "Income \n(R: <30'000 €)", "Income \n(R: <30'000 €)", "Income \n(R: <30'000 €)", "Job in car industry\n(R: no)",
+    "Location \n(R: urban)", "Location \n(R: urban)", "Approval market liberalism\n(R: low)",
+    "Approval market liberalism\n(R: low)", "No. of pure ICEVs", "Cultural/econ. significance\n(R: low)",
+    "Cultural/econ. significance\n(R: low)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)",
+    "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)",
+    "Problem attribution\n(R: low)", "Problem attribution\n(R: low)", "Disapproval regulation\n(R: low)",
+    "Disapproval regulation\n(R: low)", "Willingn. to abandon car\n(R: low)",
+    "Willingn. to abandon car\n(R: low)", "Willingn. to adopt EV\n(R: low)", "Willingn. to adopt EV\n(R: low)")
+)
 
 
 ME.BLR.sum <- cbind(ME.BLR.sum, c("30-39", "40-49", "50-59", "60+", "yes", "1-2", "3-4", "5-6", "7", 
                                   "yes", "medium", "high", "medium", "high", "male", 
                                   "30-50'000", "50-100'000", "100'000+", "yes", "semi-urban", "rural", "medium", 
                                   "high", "Number", "medium", "high", 
-                                  "AfD", "CDU/CSU", "Die Gr�nen", "Die Linke", "FDP", "none/other",  
+                                  "AfD", "CDU/CSU", "Die Grünen", "Die Linke", "FDP", "none/other",
                                   "medium", "high", "medium", "high", "medium", 
                                   "high", "medium", "high"))
 
@@ -163,36 +170,40 @@ ME.BLR.sum$AME <- as.numeric(ME.BLR.sum$AME)
 
 
 #set different variables as factors, so that they appear in the same order as for RF variable importance plot 
-ME.BLR.sum$Variable <- factor(ME.BLR.sum$Variable, levels = c("Party pref. \n(R: SPD)", "Location \n(R: urban)", "Age \n(R: <30y)", "Income \n(R: <30'000???)", "Gender", "Child(ren)", 
-                                                                 "Willingn. to adopt EV", "Willingn. to abandon car", "No. of pure ICEVs", 
-                                                                 "Driving license", "Weekly car use", "Job in car industry", "Problem attribution", "Environmental concern", "Emotional attachment", 
-                                                                 "Cultural/econ. significance", "Disapproval regulation", "Approval market liberalism"))
+ME.BLR.sum$Variable <- factor(ME.BLR.sum$Variable, levels = c(
+    "Party pref. \n(R: SPD)", "Location \n(R: urban)", "Age \n(R: <30y)", "Income \n(R: <30'000 €)",
+    "Gender \n(R: female)", "Child(ren) \n(R: none)", "Willingn. to adopt EV\n(R: low)",
+    "Willingn. to abandon car\n(R: low)", "No. of pure ICEVs", "Driving license\n(R: no)",
+    "Weekly car use\n(R: 0)", "Job in car industry\n(R: no)", "Problem attribution\n(R: low)",
+    "Environmental concern\n(R: low)", "Emotional attachment\n(R: low)", "Cultural/econ. significance\n(R: low)",
+    "Disapproval regulation\n(R: low)", "Approval market liberalism\n(R: low)")
+)
 
 ### this is nonsense code, but orders Variable values in the order that best suits the plot 
-ME.BLR.sum$Value <- factor(ME.BLR.sum$Value, levels = c("none/other", "AfD", "Die Linke", "FDP", "Die Gr�nen", "CDU/CSU", 
+ME.BLR.sum$Value <- factor(ME.BLR.sum$Value, levels = c("none/other", "AfD", "Die Linke", "FDP", "Die Grünen", "CDU/CSU",
                                                        "rural", "semi-urban", "60+", "50-59", "40-49", "30-39", "<30", 
                                                         "100'000+", "50-100'000", "30-50'000", "yes", "male", "high", "Number", "medium", "7", "5-6", "3-4", "1-2"))           
 
 
 # plot
-p_AME <- ggplot(ME.BLR.sum, aes(x = Value, y = AME, colour = Dimension)) +
-  geom_errorbar(aes(ymin = lower, ymax = upper, colour = Dimension),
-                width = .4, size = .9, 
-                position = position_dodge(0.6)) +
-  geom_point(stat = "identity", position = position_dodge(0.6), size = 3) +
-  coord_flip() +
-  geom_hline(yintercept = 0, colour = "darkred", linetype = 2, size = 1) +
-  labs(x = "") +
-  theme_light() +
-  theme(legend.position = "none") +
-  theme(panel.grid.major.y = element_blank()) +
-  facet_grid(c("Variable"), scales = "free", space = "free") +
-  theme(strip.text.y.right = element_text(angle = 0), strip.text = element_text(colour = "black", size = 13)) + 
-  theme(strip.background = element_rect(colour = "grey", fill = "grey90")) +
-  theme(axis.text = element_text(size = 11)) +
-  scale_colour_manual("", values = c("Socio-demographics" = "skyblue4", "Car-related factors" = "lightsteelblue4", "Values and beliefs" = "lightcyan4"))
+p_AME <- (
+    ggplot(ME.BLR.sum, aes(y = Value, x = AME))
+    + geom_errorbar(aes(xmin = lower, xmax = upper),
+                    width = .4, size = .6,
+                    position = position_dodge(0.6))
+    + geom_point(stat = "identity", position = position_dodge(0.6), size=1.5)
+    + geom_vline(xintercept = 0, colour = "darkred", linetype = 2, size = 0.75)
+    + labs(y = "")
+    + theme_light()
+    + theme(legend.position = "none")
+    + theme(panel.grid.major.y = element_blank())
+    + facet_grid(c("Variable"), scales = "free", space = "free", labeller = label_wrap_gen())
+    + theme(strip.text.y.right = element_text(angle = 0), strip.text = element_text(colour = "black"))
+    + theme(strip.background = element_rect(colour = "grey", fill = "grey90"))
+)
 
-ggsave(snakemake@output[["plot"]], p_AME)
+ggsave(snakemake@output[["plot"]], p_AME, dpi = 300, width = 8, height = 10, units = "in")
+write_feather(ME.BLR.sum, snakemake@output[["summary"]])
 
 ### combine RF classification results & BLR model results -> plot together
 

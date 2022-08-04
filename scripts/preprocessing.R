@@ -81,7 +81,7 @@ data$inc <- factor(data$inc)
 data <- data %>% 
   mutate(ppref = ifelse(data$v_6 == "1", "CDU/CSU", 
                         ifelse(data$v_6 == "2", "AaSPD", # Aa so that SPD is reference category
-                               ifelse(data$v_6 == "3", "Die Gr�nen", 
+                               ifelse(data$v_6 == "3", "Die Grünen",
                                       ifelse(data$v_6 == "4", "Die Linke", 
                                              ifelse(data$v_6 == "5", "FDP", 
                                                     ifelse(data$v_6 == "6", "AfD", 

@@ -42,7 +42,8 @@ rule logistic_regression:
         data = "build/preprocessed.feather",
         imputed_data = "build/imputed.feather",
     output:
-        plot = "build/logistic-regression.png"
+        plot = "build/logistic-regression.png",
+        summary = "build/logistic-regression.feather"
     conda: "envs/default.yaml"
     script: "scripts/logit.R"
 
