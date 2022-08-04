@@ -29,7 +29,8 @@ rule random_forest:
     input:
         data = "build/preprocessed.feather"
     output:
-        plot = "build/random-forest.png",
+        variable_importance = "build/random-forest-variable-importance.feather",
+        plot = "build/random-forest-variable-importance.png",
         imputed_data = "build/imputed.feather"
     conda: "envs/default.yaml"
     script: "scripts/random_forest.R"

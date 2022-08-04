@@ -61,49 +61,42 @@ imp <- importance(RFmodel, type = 1)
 
 # make this into ggplot bar chart 
 imp <- as.data.frame((imp))
+imp$MDA <- imp$MeanDecreaseAccuracy
 
 # rescale, so that max value = 1 & all others are relative to that (absolute values aren't interpretable)
-imp$acc_resc <- imp$MeanDecreaseAccuracy/max(imp$MeanDecreaseAccuracy) 
+imp$MDA_resc <- imp$MDA / max(imp$MDA)
 
 # add variable names and variable categories, so I can group (facet wrap)& colour-code them later; also to make labels readable
-imp <- cbind(imp, c("Age", "Location", "Child(ren)", "Income", "Party pref.", "Gender", "Driving license", "Job in car industry", 
-                    "Weekly car use", "No. of pure ICEVs", "Approval market liberalism", "Disapproval regulation", "Cultural/econ. significance", 
-                    "Environmental concern", "Emotional attachment", "Problem attribution", "Willingn. to abandon car", "Willingn. to adopt EV")) 
+imp$Variable <- c("Age", "Location", "Child(ren)", "Income", "Party pref.", "Gender", "Driving license",
+                  "Job in car industry", "Weekly car use", "No. of pure ICEVs", "Approval market liberalism",
+                  "Disapproval regulation", "Cultural/econ. significance", "Environmental concern",
+                  "Emotional attachment", "Problem attribution", "Willingn. to abandon car", "Willingn. to adopt EV")
 
-imp <- cbind(imp, c("1) Socio-\ndemographics", "1) Socio-\ndemographics","1) Socio-\ndemographics","1) Socio-\ndemographics","1) Socio-\ndemographics","1) Socio-\ndemographics",
-                    "2) Car-related \nfactors", "2) Car-related \nfactors", "2) Car-related \nfactors", "2) Car-related \nfactors", 
-                    "3) Values and \nbeliefs", "3) Values and \nbeliefs","3) Values and \nbeliefs","3) Values and \nbeliefs","3) Values and \nbeliefs","3) Values and \nbeliefs",
-                    "2) Car-related \nfactors", "2) Car-related \nfactors"))
-
-
-colnames(imp) <- c("MDA", "MDA_resc", "Variable", "Category")
+imp$Category <- as.factor(c("1) Socio-demographics and politics", "1) Socio-demographics and politics",
+                            "1) Socio-demographics and politics", "1) Socio-demographics and politics",
+                            "1) Socio-demographics and politics","1) Socio-demographics and politics",
+                            "2) Context and habits", "2) Context and habits", "2) Context and habits",
+                            "2) Context and habits", "3) Values and beliefs", "3) Values and beliefs",
+                            "3) Values and beliefs", "3) Values and beliefs", "3) Values and beliefs",
+                            "3) Values and beliefs", "2) Context and habits", "2) Context and habits"))
 
 # order so that they are displayed as most to least important variables per category
 imp$Variable <- factor(imp$Variable, levels = c("Child(ren)", "Gender", "Income",  "Age", "Location", "Party pref.",
-                                                "Job in car industry", "Weekly car use", "Driving license", "No. of pure ICEVs", 
-                                                "Willingn. to abandon car", "Willingn. to adopt EV", 
-                                                "Approval market liberalism", "Disapproval regulation", "Cultural/econ. significance", "Emotional attachment", 
+                                                "Job in car industry", "Weekly car use", "Driving license", "No. of pure ICEVs",
+                                                "Willingn. to abandon car", "Willingn. to adopt EV",
+                                                "Approval market liberalism", "Disapproval regulation", "Cultural/econ. significance", "Emotional attachment",
                                                 "Environmental concern", "Problem attribution"))
 
-
 #plot
-p_VarIm <- ggplot(imp, aes(x = Variable, y = MDA_resc, fill = Category)) +
-  geom_bar(stat = "identity") +
-  coord_flip() +
-  labs(title = "", 
-       x = "", 
-       y = "") +
-  theme_light() +
-  facet_wrap(~Category, scales = "free", ncol = 3) +
-  scale_y_continuous(limits = c(0,1)) +
-  scale_fill_manual("Variable Category", values = c("1) Socio-\ndemographics" = "skyblue4", "2) Car-related \nfactors" = "lightsteelblue4", "3) Values and \nbeliefs" = "lightcyan4")) +
-  theme(legend.position = "none") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.y = element_text(size = 11)) +
-  theme(axis.text.x = element_text(size = 10)) +
-  theme(strip.text = element_text(size = 11)) 
+p_var_im <- (
+    ggplot(imp, aes(y = Variable, x = MDA_resc))
+  + geom_bar(stat = "identity")
+  + labs(x = "", y = "")
+  + theme_light()
+  + facet_wrap(~Category, scales = "free_y", labeller = label_wrap_gen())
+  + theme(legend.position = "none")
+)
 
-p_VarIm
-
-ggsave(snakemake@output[["plot"]], p_VarIm)
+ggsave(snakemake@output[["plot"]], p_var_im, dpi = 300, width = 8, height = 2.25, units = "in")
+write_feather(imp, snakemake@output[["variable_importance"]])
 write_feather(data.imputed, snakemake@output[["imputed_data"]])
