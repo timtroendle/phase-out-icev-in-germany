@@ -7,8 +7,9 @@ min_version("7.8")
 rule all:
     message: "Run entire analysis and compile report."
     input:
-        "build/random-forest.png",
+        "build/random-forest-variable-importance.png",
         "build/logistic-regression.png",
+        "build/all-logistic-regressions.png",
         "build/treatment.png",
         "build/test-report.html"
 
@@ -46,6 +47,17 @@ rule logistic_regression:
         summary = "build/logistic-regression.feather"
     conda: "envs/default.yaml"
     script: "scripts/logit.R"
+
+
+rule all_logistic_regressions:
+    message: "Build and plot all four logistic regression models."
+    input:
+        imputed_data = "build/imputed.feather",
+    output:
+        plot = "build/all-logistic-regressions.png",
+        data = "build/all-logistic-regressions.feather"
+    conda: "envs/default.yaml"
+    script: "scripts/all_logits.R"
 
 
 rule treatments:
