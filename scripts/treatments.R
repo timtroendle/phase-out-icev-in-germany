@@ -2,13 +2,8 @@
 library(arrow)
 library(tidyverse)    # basic functions
 library(cowplot)      # arrange multiple plots in one figure
-library(Hmisc)
-library(caret)
-library(e1071)
-library(ROCR)
 library(ggpubr)
 library(rstatix)      # conduct Wilcoxon signed rank test 
-library(broom)
 library(readxl)       # read excel sheet
 
 
@@ -120,29 +115,24 @@ df_treatment_l3 %>%
 str(df_treatment_diff)
 
 ### turn around scales so that increase in value is equivalent to increase in acceptance
-# FIXME lines 124--145 are broken and therefore commented
-#df_treatment_diff <- df_treatment_diff %>% 
-#  mutate(diff = differences/-1)
+df_treatment_diff <- df_treatment_diff %>%
+  mutate(diff = differences/-1)
 
-#df_treatment_diff$diff <- factor(df_treatment_diff$diff)
+df_treatment_diff$diff <- factor(df_treatment_diff$diff)
 
-#df_treatment_diff <- df_treatment_diff %>% 
-#  mutate(treatment = ifelse(df_treatment_diff$treatment == "1", "A) Change is inevitable", 
-#                            ifelse(df_treatment_diff$treatment == "2", "B) EVs are better than you think", "C) ICEVs are worse than you think")))
+df <- data.frame(df_treatment_diff)
+df$treatment <- factor(df$treatment)
+levels(df$treatment) <- c("A) Change is\n inevitable", "B) EVs are\n better than\n you think", "C) ICEVs are worse\n than you think")
 
-#p_treat1 <- ggplot(df_treatment_diff, aes(x = treatment)) +
-#  geom_bar(aes(y= (..count..), fill = factor(diff, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5) +
-#  scale_fill_manual("Change in \n Likert score", values = c("lightsteelblue1", "lightsteelblue2", "lightsteelblue3", "lightsteelblue4", "gray25", 
-#                                                            "coral4", "coral3", "coral2", "coral")) +
-#  theme_light() +
-#  labs(x = "", y = "N") +
-#  theme(axis.text = element_text(size = 22)) +
-#  theme(axis.text = element_text(size = 22)) +
-#  theme(axis.title.y = element_text(vjust = 0.9, angle = 0, size = 15)) + 
-#  theme(legend.title = element_text(size = 20)) +
-#  theme(legend.position = "none")
-
-#p_treat1
+p_treat1 <- (
+    ggplot(df, aes(x = treatment))
+    + geom_bar(aes(y= (..count..), fill = factor(diff, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5)
+    + scale_fill_manual("Change in \n Likert score", values = c("lightsteelblue1", "lightsteelblue2", "lightsteelblue3", "lightsteelblue4", "gray25",
+                                                            "coral4", "coral3", "coral2", "coral"))
+    + theme_light()
+    + labs(x = "", y = "N")
+    + theme(legend.position = "none")
+)
 
 
 ############### treatment effect of EC proposal - follow up survey data
@@ -238,20 +228,17 @@ df2 <- df2 %>%
   filter(T_EC != "NA")
 
 #plot
-p_treat2 <- ggplot(df2, aes(x = T_EC)) +
-  geom_bar(aes(y= (..count..), fill = factor(diff_a, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5) +
-  scale_fill_manual("Change in \n Likert score", values = c("lightsteelblue1", "lightsteelblue2", "lightsteelblue3", "lightsteelblue4", "gray25", 
-                                                            "coral4", "coral3", "coral2", "coral")) +
-  theme_light() +
-  labs(x = "", y = "N") +
-  theme(axis.text = element_text(size = 22)) +
-  theme(axis.text = element_text(size = 22)) +
-  theme(legend.text = element_text(size = 16)) +
-  theme(axis.title.y = element_text(vjust = 0.9, angle = 0, size = 15)) + 
-  theme(legend.title = element_text(size = 18))
+df2$T_EC_string <- factor(df2$T_EC)
+levels(df2$T_EC_string) <- c("No", "Yes")
 
-ggsave(snakemake@output[["plot"]], p_treat2)
-
+p_treat2 <- (
+    ggplot(df2, aes(x = T_EC_string))
+    + geom_bar(aes(y= (..count..), fill = factor(diff_a, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5)
+    + scale_fill_manual("Change in \n Likert score", values = c("lightsteelblue1", "lightsteelblue2", "lightsteelblue3", "lightsteelblue4", "gray25",
+                                                                "coral4", "coral3", "coral2", "coral"))
+    + theme_light()
+    + labs(x = "", y = "N")
+)
 
 df2 %>% 
   group_by(T_EC) %>% count(diff_a)
@@ -292,8 +279,9 @@ df2_l0 %>%
 
 ### combine two plots on treatment effects 
 
-#plot_grid(p_treat1, NULL, p_treat2, # FIXME not possible because of problem in line 124
-#          ncol = 3, nrow = 1, 
-#          rel_widths = c(1, .08, 1),
-#          labels = c("a.", "", "b."), 
-#          label_size =20)
+p_both <- plot_grid(p_treat1, NULL, p_treat2,
+          ncol = 3, nrow = 1,
+          rel_widths = c(1, .08, 1),
+          labels = c("a.", "", "b."))
+
+ggsave(snakemake@output[["plot"]], p_both, dpi = 300, width = 8, height = 4, units = "in")
