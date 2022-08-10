@@ -126,9 +126,10 @@ levels(df$treatment) <- c("A) Change is\n inevitable", "B) EVs are\n better than
 
 p_treat1 <- (
     ggplot(df, aes(x = treatment))
-    + geom_bar(aes(y= (..count..), fill = factor(diff, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5)
+    + geom_bar(aes(y= (..count..), fill = factor(diff, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5, position = "fill")
     + scale_fill_manual("Change in \n Likert score", values = c("lightsteelblue1", "lightsteelblue2", "lightsteelblue3", "lightsteelblue4", "gray25",
                                                             "coral4", "coral3", "coral2", "coral"))
+    + scale_y_continuous(breaks=c(0.0, 0.25, 0.5, 0.75, 1.0), labels=c("0%", "25%", "50%", "75%", "100%"))
     + theme_light()
     + labs(x = "", y = "N")
     + theme(legend.position = "none")
@@ -233,9 +234,10 @@ levels(df2$T_EC_string) <- c("No", "Yes")
 
 p_treat2 <- (
     ggplot(df2, aes(x = T_EC_string))
-    + geom_bar(aes(y= (..count..), fill = factor(diff_a, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5)
+    + geom_bar(aes(y= (..count..), fill = factor(diff_a, levels = c("4", "3", "2", "1", "0", "-1", "-2", "-3", "-4"), labels = c("+4", "+3", "+2", "+1", "none", "-1", "-2", "-3", "-4"))), width = .5, position = "fill")
     + scale_fill_manual("Change in \n Likert score", values = c("lightsteelblue1", "lightsteelblue2", "lightsteelblue3", "lightsteelblue4", "gray25",
                                                                 "coral4", "coral3", "coral2", "coral"))
+    + scale_y_continuous(breaks=c(0.0, 0.25, 0.5, 0.75, 1.0), labels=c("0%", "25%", "50%", "75%", "100%"))
     + theme_light()
     + labs(x = "", y = "N")
 )
