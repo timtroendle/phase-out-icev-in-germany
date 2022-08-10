@@ -34,11 +34,13 @@ data <- data %>%
 
 data$acc <- factor(data$acc)
 
-data$agree <- as.ordered(data$v_16)
-levels(data$agree) <- c("Strongly agree", "Agree", "Neither agree nor disagree", "Disagree", "Strongly disagree")
-data$agree <- ordered(
-    data$agree,
-    levels = c("Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree", "Strongly agree")
+data$app <- as.ordered(data$v_16)
+levels(data$app) <- c("Strongly approve", "Rather approve", "Neither approve nor disapprove",
+                        "Rather disapprove", "Strongly disapprove")
+data$app <- ordered(
+    data$app,
+    levels = c("Strongly disapprove", "Rather disapprove", "Neither approve nor disapprove",
+               "Rather approve", "Strongly approve")
 )
 
 #################################################### explanatory variables #######################################################################

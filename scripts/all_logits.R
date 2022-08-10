@@ -11,10 +11,10 @@ imputed_data$y2 <- 0
 imputed_data$y3 <- 0
 imputed_data$y4 <- 0
 
-imputed_data$y1[imputed_data$agree >= "Disagree"] <- 1
-imputed_data$y2[imputed_data$agree >= "Neither agree nor disagree"] <- 1
-imputed_data$y3[imputed_data$agree >= "Agree"] <- 1
-imputed_data$y4[imputed_data$agree >= "Strongly agree"] <- 1
+imputed_data$y1[imputed_data$app >= "Rather disapprove"] <- 1
+imputed_data$y2[imputed_data$app >= "Neither approve nor disapprove"] <- 1
+imputed_data$y3[imputed_data$app >= "Rather approve"] <- 1
+imputed_data$y4[imputed_data$app >= "Strongly approve"] <- 1
 
 predictors = "age + loc + chld + inc + ppref + gen + dlic + job + dfreq + npice + mlib + vera + pger + envc + emat + proba + wac + wev"
 
@@ -30,16 +30,17 @@ me4 <- summary(margins(fit4))
 
 # Prepare plotting
 
-me1$model_name <- "At least 'Disagree'"
-me2$model_name <- "At least 'Neither agree nor disagree'"
-me3$model_name <- "At least 'Agree'"
-me4$model_name <- "'Strongly Agree'"
+me1$model_name <- "At least 'Rather disapprove'"
+me2$model_name <- "At least 'Neither approve nor disapprove'"
+me3$model_name <- "At least 'Rather approve'"
+me4$model_name <- "'Strongly approve'"
 
 me <- rbind(me1, me2, me3, me4)
 
 me$model_name <- ordered(
-    me$model_name, 
-    c("At least 'Disagree'", "At least 'Neither agree nor disagree'", "At least 'Agree'", "'Strongly Agree'")
+    me$model_name,
+    c("At least 'Rather disapprove'", "At least 'Neither approve nor disapprove'",
+      "At least 'Rather approve'", "'Strongly approve'")
 )
 
 level_names <- c("30-39", "40-49", "50-59", "60+", "yes", "1-2", "3-4", "5-6", "7",

@@ -17,7 +17,7 @@ set.seed(12345)
 
 # select all relevant variables, to be included in the model 
 data_rf <- data %>% 
-  dplyr::select(c(lfdn, acc, agree, age, loc, chld, inc, ppref, gen, dlic, job, dfreq, npice, mlib, vera, pger, envc, emat, proba, wac, wev))
+  dplyr::select(c(lfdn, acc, app, age, loc, chld, inc, ppref, gen, dlic, job, dfreq, npice, mlib, vera, pger, envc, emat, proba, wac, wev))
 
 str(data_rf)
 
