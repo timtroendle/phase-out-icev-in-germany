@@ -29,6 +29,8 @@ rule random_forest:
     message: "Train a random forest to data."
     input:
         data = "build/preprocessed.feather"
+    params:
+        colours = config["colours"]
     output:
         variable_importance = "build/random-forest-variable-importance.feather",
         plot = "build/random-forest-variable-importance.png",
@@ -42,6 +44,8 @@ rule logistic_regression:
     input:
         data = "build/preprocessed.feather",
         imputed_data = "build/imputed.feather",
+    params:
+        colours = config["colours"]
     output:
         plot = "build/logistic-regression.png",
         summary = "build/logistic-regression.feather"
@@ -53,6 +57,8 @@ rule all_logistic_regressions:
     message: "Build and plot all four logistic regression models."
     input:
         imputed_data = "build/imputed.feather",
+    params:
+        colours = config["colours"]
     output:
         plot = "build/all-logistic-regressions.png",
         data = "build/all-logistic-regressions.feather"

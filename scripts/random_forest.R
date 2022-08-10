@@ -25,31 +25,6 @@ str(data_rf)
 data.imputed <- rfImpute(acc ~ ., data = data_rf, iter = 6)
 
 
-### make model, use imputed dataset 
-RFmodela <- randomForest(acc ~ age + loc + chld + inc + ppref + gen + dlic + job + dfreq + npice + mlib + vera + pger + envc + emat + proba + wac + wev, data = data.imputed, proximity = TRUE)
-
-RFmodela
-### OBB estimate or error rate: 19% -> this means that 81% of the OOB samples were correctly classified by the random forest 
-
-# plot model (for ntree = 500, i.e. default)
-plot(RFmodela)
-
-# test whether number or trees (default = 500) was appropriate --> with 1000 trees 
-RFmodelb <- randomForest(acc ~ age + loc + chld + inc + ppref + gen + dlic + job + dfreq + npice + mlib + vera + pger + envc + emat + proba + wac + wev, data = data.imputed, ntree = 1000, proximity = TRUE, importance = TRUE)
-
-RFmodelb
-# OBB error rate is very similar to before (slightly lower)
-
-# test whether no of variables tried at each split was appropriate 
-oob.values <- vector(length = 10)
-for(i in 1:10) {
-  temp.model <- randomForest(acc ~ ., data=data.imputed, mtry = i, ntree = 1000)
-  oob.values[i] <- temp.model$err.rate[nrow(temp.model$err.rate),1]
-}
-
-oob.values
-# results show smallest oob value for mtry = 4
-
 RFmodel <- randomForest(acc ~ age + loc + chld + inc + ppref + gen + dlic + job + dfreq + npice + mlib + vera + pger + envc + emat + proba + wac + wev, data = data.imputed, ntree = 1000, mtry = 4, proximity = TRUE, importance = TRUE)
 # when turning on importance = TRUE, it computes both mean-decrease-in-impurity and permutation importances
 
@@ -86,15 +61,20 @@ imp$Variable <- factor(imp$Variable, levels = c("Child(ren)", "Gender", "Income"
                                                 "Willingn. to abandon car", "Willingn. to adopt EV",
                                                 "Approval market liberalism", "Disapproval regulation", "Cultural/econ. significance", "Emotional attachment",
                                                 "Environmental concern", "Problem attribution"))
+imp$Category <- factor(
+    imp$Category,
+    levels = c("1) Socio-demographics and politics", "2) Context and habits", "3) Values and beliefs")
+)
 
 #plot
 p_var_im <- (
-    ggplot(imp, aes(y = Variable, x = MDA_resc))
-  + geom_bar(stat = "identity")
-  + labs(x = "", y = "")
-  + theme_light()
-  + facet_wrap(~Category, scales = "free_y", labeller = label_wrap_gen())
-  + theme(legend.position = "none")
+    ggplot(imp, aes(y = Variable, x = MDA_resc, fill = Category))
+    + geom_bar(stat = "identity")
+    + labs(x = "", y = "")
+    + theme_light()
+    + facet_wrap(~Category, scales = "free_y", labeller = label_wrap_gen())
+    + theme(legend.position = "none")
+    + scale_fill_manual(values = snakemake@params[["colours"]])
 )
 
 ggsave(snakemake@output[["plot"]], p_var_im, dpi = 300, width = 8, height = 2.25, units = "in")

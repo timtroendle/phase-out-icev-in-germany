@@ -94,11 +94,12 @@ me$level <- factor(me$level, levels = c(
     "100'000+", "50-100'000", "30-50'000", "yes", "male", "high", "Number",
     "medium", "7", "5-6", "3-4", "1-2")
 )
+me$dimension <- factor(me$dimension, levels = c("Socio-demographics", "Car-related factors", "Values and beliefs"))
 
 write_feather(me, snakemake@output[["data"]])
 
 gg_me <- (
-    ggplot(me, aes(y = level, x = AME))
+    ggplot(me, aes(y = level, x = AME, col = dimension))
     + geom_errorbar(aes(xmin = lower, xmax = upper),
                     width = .4, size = .6,
                     position = position_dodge(0.6))
@@ -117,6 +118,7 @@ gg_me <- (
     )
     + theme(strip.text.y.right = element_text(angle = 0), strip.text = element_text(colour = "black"))
     + theme(strip.background = element_rect(colour = "grey", fill = "grey90"))
+    + scale_colour_manual(values = snakemake@params[["colours"]])
 )
 
 ggsave(snakemake@output[["plot"]], gg_me, dpi = 300, width = 8, height = 10, units = "in")

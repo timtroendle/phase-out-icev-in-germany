@@ -1,2 +1,5 @@
 # The right place for all your configuration values.
-value: 4 # FIXME remove placeholder
+colours:
+    - "#09306B"
+    - "#2271B5"
+    - "#6BAED6"

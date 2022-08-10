@@ -184,10 +184,11 @@ ME.BLR.sum$Value <- factor(ME.BLR.sum$Value, levels = c("none/other", "AfD", "Di
                                                        "rural", "semi-urban", "60+", "50-59", "40-49", "30-39", "<30", 
                                                         "100'000+", "50-100'000", "30-50'000", "yes", "male", "high", "Number", "medium", "7", "5-6", "3-4", "1-2"))           
 
+ME.BLR.sum$Dimension <- factor(ME.BLR.sum$Dimension, levels = c("Socio-demographics", "Car-related factors", "Values and beliefs"))
 
 # plot
 p_AME <- (
-    ggplot(ME.BLR.sum, aes(y = Value, x = AME))
+    ggplot(ME.BLR.sum, aes(y = Value, x = AME, col = Dimension))
     + geom_errorbar(aes(xmin = lower, xmax = upper),
                     width = .4, size = .6,
                     position = position_dodge(0.6))
@@ -200,6 +201,7 @@ p_AME <- (
     + facet_grid(c("Variable"), scales = "free", space = "free", labeller = label_wrap_gen())
     + theme(strip.text.y.right = element_text(angle = 0), strip.text = element_text(colour = "black"))
     + theme(strip.background = element_rect(colour = "grey", fill = "grey90"))
+    + scale_colour_manual(values = snakemake@params[["colours"]])
 )
 
 ggsave(snakemake@output[["plot"]], p_AME, dpi = 300, width = 8, height = 10, units = "in")
