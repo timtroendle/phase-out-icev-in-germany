@@ -82,8 +82,8 @@ me$variable <- rep(variable_names, 4)
 
 me$variable <- factor(me$variable, levels = c(
     "Party pref. \n(R: SPD)", "Location \n(R: urban)", "Age \n(R: <30y)", "Income \n(R: <30'000 €)",
-    "Gender \n(R: female)", "Child(ren) \n(R: none)", "Willingn. to adopt EV\n(R: low)",
-    "Willingn. to abandon car\n(R: low)", "No. of pure ICEVs", "Driving license\n(R: no)",
+    "Gender \n(R: female)", "Child(ren) \n(R: none)", "Willingn. to abandon car\n(R: low)",
+    "Willingn. to adopt EV\n(R: low)", "Driving license\n(R: no)", "No. of pure ICEVs",
     "Weekly car use\n(R: 0)", "Job in car industry\n(R: no)", "Problem attribution\n(R: low)",
     "Environmental concern\n(R: low)", "Emotional attachment\n(R: low)", "Cultural/econ. significance\n(R: low)",
     "Disapproval regulation\n(R: low)", "Approval market liberalism\n(R: low)")
