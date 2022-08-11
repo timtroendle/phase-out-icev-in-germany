@@ -22,7 +22,7 @@ data_rf <- data %>%
 str(data_rf)
 
 ### impute missing values for NAs (there are very few, except for WEV variable) because random forest does not handle missing values
-data.imputed <- rfImpute(acc ~ ., data = data_rf, iter = 6)
+data.imputed <- rfImpute(acc ~ ., data = data_rf, iter = 6, ntree = 1000)
 
 
 RFmodel <- randomForest(acc ~ age + loc + chld + inc + ppref + gen + dlic + job + dfreq + npice + mlib + vera + pger + envc + emat + proba + wac + wev, data = data.imputed, ntree = 1000, mtry = 4, proximity = TRUE, importance = TRUE)
