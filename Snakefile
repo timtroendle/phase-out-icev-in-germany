@@ -11,7 +11,6 @@ rule all:
         "build/logistic-regression.png",
         "build/all-logistic-regressions.png",
         "build/treatment.png",
-        "build/test-report.html"
 
 
 rule preprocess:
@@ -98,10 +97,3 @@ rule clean: # removes all generated results
 
          shutil.rmtree("build")
          print("Data downloaded to data/ has not been cleaned.")
-
-
-rule test:
-    conda: "envs/test.yaml"
-    output: "build/test-report.html"
-    shell:
-        "py.test --html={output} --self-contained-html"

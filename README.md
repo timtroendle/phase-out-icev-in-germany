@@ -22,16 +22,10 @@ To generate a PDF of the dependency graph of all steps `build/dag.pdf` run:
 
     snakemake --profile profiles/default -f dag
 
-## Run the tests
-
-    snakemake --profile profiles/default test
-
 ## Repo structure
 
-* `scripts`: contains the Python source code as scripts
-* `rules`: contains Snakemake rule definitions
+* `scripts`: contains the R source code as scripts
 * `envs`: contains execution environments
-* `tests`: contains the test code
 * `config`: configurations used in the study
 * `profiles`: Snakemake execution profiles
 * `data`: place for raw data
