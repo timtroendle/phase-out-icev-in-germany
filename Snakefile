@@ -34,10 +34,21 @@ rule impute:
     script: "scripts/impute.R"
 
 
+rule factors:
+    message: "Perform confirmatory factor analysis and derive factors."
+    input:
+        imputed_data = "build/imputed.feather"
+    output:
+        imputed_data_with_factors = "build/imputed-and-factors.feather",
+        summary = "build/cfa.txt"
+    conda: "envs/lavaan.yaml"
+    script: "scripts/cfa.R"
+
+
 rule random_forest:
     message: "Train a random forest to data."
     input:
-        imputed_data = "build/imputed.feather"
+        imputed_data = "build/imputed-and-factors.feather"
     params:
         colours = config["colours"]
     output:
@@ -50,8 +61,7 @@ rule random_forest:
 rule logistic_regression:
     message: "Build logistic regression model."
     input:
-        data = "build/preprocessed.feather",
-        imputed_data = "build/imputed.feather",
+        imputed_data = "build/imputed-and-factors.feather",
     params:
         colours = config["colours"]
     output:
@@ -64,7 +74,7 @@ rule logistic_regression:
 rule all_logistic_regressions:
     message: "Build and plot all four logistic regression models."
     input:
-        imputed_data = "build/imputed.feather",
+        imputed_data = "build/imputed-and-factors.feather",
     params:
         colours = config["colours"]
     output:

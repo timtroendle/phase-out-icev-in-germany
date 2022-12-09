@@ -15,7 +15,7 @@ data.imputed <- read_feather(snakemake@input[["imputed_data"]])
 
 set.seed(12345)
 
-RFmodel <- randomForest(acc ~ age + loc + chld + inc + ppref + gen + dlic + job + dfreq + npice + mlib + vera + pger + envc + emat + proba + wac + wev, data = data.imputed, ntree = 1000, mtry = 4, proximity = TRUE, importance = TRUE)
+RFmodel <- randomForest(acc ~ age + loc + chld + inc + ppref + gen + dlic + job + dfreq + npice + lib + pger + emat + proba + wac + wev, data = data.imputed, ntree = 1000, mtry = 4, proximity = TRUE, importance = TRUE)
 # when turning on importance = TRUE, it computes both mean-decrease-in-impurity and permutation importances
 
 RFmodel
@@ -33,8 +33,8 @@ imp$MDA_resc <- imp$MDA / max(imp$MDA)
 
 # add variable names and variable categories, so I can group (facet wrap)& colour-code them later; also to make labels readable
 imp$Variable <- c("Age", "Location", "Child(ren)", "Income", "Party pref.", "Gender", "Driving license",
-                  "Job in car industry", "Weekly car use", "No. of pure ICEVs", "Approval market liberalism",
-                  "Disapproval regulation", "Cultural/econ. significance", "Environmental concern",
+                  "Job in car industry", "Weekly car use", "No. of pure ICEVs", "Liberalism",
+                  "Cultural/econ. significance",
                   "Emotional attachment", "Problem attribution", "Willingn. to abandon car", "Willingn. to adopt EV")
 
 imp$Category <- as.factor(c("1) Socio-demographics and politics", "1) Socio-demographics and politics",
@@ -43,14 +43,14 @@ imp$Category <- as.factor(c("1) Socio-demographics and politics", "1) Socio-demo
                             "2) Context and habits", "2) Context and habits", "2) Context and habits",
                             "2) Context and habits", "3) Values and beliefs", "3) Values and beliefs",
                             "3) Values and beliefs", "3) Values and beliefs", "3) Values and beliefs",
-                            "3) Values and beliefs", "2) Context and habits", "2) Context and habits"))
+                            "3) Values and beliefs"))
 
 # order so that they are displayed as most to least important variables per category
 imp$Variable <- factor(imp$Variable, levels = c("Child(ren)", "Gender", "Income",  "Age", "Location", "Party pref.",
                                                 "Job in car industry", "Weekly car use", "No. of pure ICEVs", "Driving license",
                                                 "Willingn. to adopt EV", "Willingn. to abandon car",
-                                                "Approval market liberalism", "Disapproval regulation", "Cultural/econ. significance", "Emotional attachment",
-                                                "Environmental concern", "Problem attribution"))
+                                                "Liberalism", "Cultural/econ. significance", "Emotional attachment",
+                                                "Problem attribution"))
 imp$Category <- factor(
     imp$Category,
     levels = c("1) Socio-demographics and politics", "2) Context and habits", "3) Values and beliefs")

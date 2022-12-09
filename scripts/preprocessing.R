@@ -197,64 +197,28 @@ data$wev <- ordered(data$wev)
 data$v_49[data$v_49 == "0"] <- NA
 data$v_91[data$v_91 == "0"] <- NA
 
-data <- data %>% 
-  mutate(v_49_91 = (data$v_49 + data$v_91) /2)
-
-data <- data %>% #(again, 3=high, 2=medium, 1=low) -> judgment call on cut-off points (but absolute values are of low importance)
-  mutate(proba = ifelse(data$v_49_91 %in% c("1", "1.5", "2"), "3", 
-                        ifelse(data$v_49_91 %in% c("2.5", "3", "3.5"), "2", 
-                               ifelse(data$v_49_91 %in% c("4", "4.5", "5"), "1", NA))))
-data$proba <- factor(data$proba)
-
-
 # envc (environmental concern, via statement on importance of climate and environmental protection)
-data <- data %>% 
-  mutate(envc = v_48)
-data$envc[data$envc == "0"] <- NA
-data$envc <- ordered(data$envc)
-
+data$v_48[data$v_48 == "0"] <- NA
+data$v_48 <- ordered(data$v_48)
 
 # pger (degree to which ICEVs are regarded as a part of Germany)
 data$v_45[data$v_45 == "0"] <- NA
 data$v_46[data$v_46 == "0"] <- NA
 data$v_47[data$v_47 == "0"] <- NA
 
-data <- data %>% 
-  mutate(v_45_46_47 = (data$v_45 + data$v_46 + data$v_47) / 3)
-
-data <- data %>% 
-  mutate(pger = ifelse(data$v_45_46_47 <= 2, "3", 
-                       ifelse(data$v_45_46_47 > 2 & data$v_45_46_47 < 4, "2", 
-                              ifelse(data$v_45_46_47 >= 4, "1", NA))))
-data$pger <- factor(data$pger)
-
-
 # emat (degree of emotional attachment)
 data$v_51[data$v_51 == "0"] <- NA
 data$v_52[data$v_52 == "0"] <- NA
 data$v_53[data$v_53 == "0"] <- NA
 
-data <- data %>% 
-  mutate(v_51_52_53 = (data$v_51 + data$v_52 + data$v_53) / 3)
-
-data <- data %>% 
-  mutate(emat = ifelse(data$v_51_52_53 <= 2, "3", 
-                       ifelse(data$v_51_52_53 > 2 & data$v_51_52_53 < 4, "2", 
-                              ifelse(data$v_51_52_53 >= 4, "1", NA))))
-data$emat <- factor(data$emat)
-
-
 # vera (degree of aversion to regulation)
-data <- data %>%
-  mutate(vera = v_44)
-data$vera[data$vera == "0"] <- NA
-data$vera <- ordered(data$vera)
-
+data$v_44[data$v44 == "0"] <- NA
+data$v_44 <- ordered(data$v_44)
 
 # mlib (dgree market liberalism)
-data <- data %>% 
-  mutate(mlib = v_43)
-data$mlib[data$mlib == "0"] <- NA
-data$mlib <- ordered(data$mlib)
+data$v_43[data$v_43 == "0"] <- NA
+data$v_43 <- ordered(data$v_43)
+
+# TODO invert likert items: 1 is highest, 5 is lowest
 
 write_feather(data, snakemake@output[["preprocessed_data"]])
