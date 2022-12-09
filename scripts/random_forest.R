@@ -5,7 +5,7 @@ library(randomForest) # conduct random forest classification
 
 
 # load data
-data <- read_feather(snakemake@input[["data"]])
+data.imputed <- read_feather(snakemake@input[["imputed_data"]])
 
 ##################################### random forest classification ###############################################################################
 
@@ -14,16 +14,6 @@ data <- read_feather(snakemake@input[["data"]])
 ##################################################################################################################################################
 
 set.seed(12345)
-
-# select all relevant variables, to be included in the model 
-data_rf <- data %>% 
-  dplyr::select(c(lfdn, acc, app, age, loc, chld, inc, ppref, gen, dlic, job, dfreq, npice, mlib, vera, pger, envc, emat, proba, wac, wev))
-
-str(data_rf)
-
-### impute missing values for NAs (there are very few, except for WEV variable) because random forest does not handle missing values
-data.imputed <- rfImpute(acc ~ ., data = data_rf, iter = 6, ntree = 1000)
-
 
 RFmodel <- randomForest(acc ~ age + loc + chld + inc + ppref + gen + dlic + job + dfreq + npice + mlib + vera + pger + envc + emat + proba + wac + wev, data = data.imputed, ntree = 1000, mtry = 4, proximity = TRUE, importance = TRUE)
 # when turning on importance = TRUE, it computes both mean-decrease-in-impurity and permutation importances
@@ -79,4 +69,3 @@ p_var_im <- (
 
 ggsave(snakemake@output[["plot"]], p_var_im, dpi = 300, width = 8, height = 2.25, units = "in")
 write_feather(imp, snakemake@output[["variable_importance"]])
-write_feather(data.imputed, snakemake@output[["imputed_data"]])

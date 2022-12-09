@@ -24,16 +24,25 @@ rule preprocess:
     script: "scripts/preprocessing.R"
 
 
+rule impute:
+    message: "Impute missing data."
+    input:
+        data = "build/preprocessed.feather"
+    output:
+        imputed_data = "build/imputed.feather"
+    conda: "envs/default.yaml"
+    script: "scripts/impute.R"
+
+
 rule random_forest:
     message: "Train a random forest to data."
     input:
-        data = "build/preprocessed.feather"
+        imputed_data = "build/imputed.feather"
     params:
         colours = config["colours"]
     output:
         variable_importance = "build/random-forest-variable-importance.feather",
         plot = "build/random-forest-variable-importance.png",
-        imputed_data = "build/imputed.feather"
     conda: "envs/default.yaml"
     script: "scripts/random_forest.R"
 
