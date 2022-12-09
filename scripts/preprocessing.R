@@ -53,7 +53,7 @@ data$app <- ordered(
 data <- data %>% 
   mutate(age = v_114)
 data$age[data$age == "0"] <- NA
-data$age <- factor(data$age)
+data$age <- ordered(data$age)
 
 
 # loc (location)
@@ -76,13 +76,11 @@ data <- data %>%
 data$chld <- factor(data$chld)
 
 
-# inc (income - collapse income groups into 4)
-data <- data %>% 
-  mutate(inc = ifelse(data$v_5 %in% c("1", "2"), "1", 
-                      ifelse(data$v_5 == "3", "2", 
-                             ifelse(data$v_5 %in% c("4", "5"), "3", 
-                                    ifelse(data$v_5 %in% c("6", "7"), "4", NA)))))
-data$inc <- factor(data$inc)
+# inc (income)
+data <- data %>%
+  mutate(inc = v_5)
+data$inc[data$inc == "0"] <- NA
+data$inc <- ordered(data$inc)
 
 
 # ppref (Party pref.)
@@ -120,7 +118,7 @@ data$job <- factor(data$job)
 data <- data %>% 
   mutate(dfreq = v_9)
 data$dfreq[data$dfreq == "0"] <- NA
-data$dfreq <- factor(data$dfreq)
+data$dfreq <- ordered(data$dfreq)
 
 
 # dlic (availability of driving license, whereby 0= no, 1 = yes)
@@ -181,7 +179,7 @@ data$npice <- data$ndie + data$npet
 data <- data %>% 
   mutate(wac = ifelse(data$v_72 == "2", "3", 
                       ifelse(data$v_79 == "0", "2", "1")))
-data$wac <- factor(data$wac)
+data$wac <- ordered(data$wac)
 
 # wev (Willingn. to adopt EV; only among those that are != high to last category)
 
@@ -189,7 +187,7 @@ data <- data %>%
   mutate(wev = ifelse(data$v_82 == "2", "3", 
                       ifelse(data$v_90 == "0", "2", 
                              ifelse(data$v_90 == "1", "1", NA))))
-data$wev <- factor(data$wev)
+data$wev <- ordered(data$wev)
 
 
 ###################################### beliefs ##################################################################################################
@@ -211,10 +209,9 @@ data$proba <- factor(data$proba)
 
 # envc (environmental concern, via statement on importance of climate and environmental protection)
 data <- data %>% 
-  mutate(envc = ifelse(data$v_48 %in% c("1", "2"), "3", 
-                       ifelse(data$v_48 == "3", "2", 
-                              ifelse(data$v_48 %in% c("4", "5"), "1", NA))))
-data$envc <- factor(data$envc)
+  mutate(envc = v_48)
+data$envc[data$envc == "0"] <- NA
+data$envc <- ordered(data$envc)
 
 
 # pger (degree to which ICEVs are regarded as a part of Germany)
@@ -234,7 +231,7 @@ data$pger <- factor(data$pger)
 
 # emat (degree of emotional attachment)
 data$v_51[data$v_51 == "0"] <- NA
-data$v_51[data$v_52 == "0"] <- NA
+data$v_52[data$v_52 == "0"] <- NA
 data$v_53[data$v_53 == "0"] <- NA
 
 data <- data %>% 
@@ -248,18 +245,16 @@ data$emat <- factor(data$emat)
 
 
 # vera (degree of aversion to regulation)
-data <- data %>% 
-  mutate(vera = ifelse(data$v_44 %in% c("1", "2"), "3", 
-                       ifelse(data$v_44 == "3", "2", 
-                              ifelse(data$v_44 %in% c("4", "5"), "1", NA))))
-data$vera <- factor(data$vera)
+data <- data %>%
+  mutate(vera = v_44)
+data$vera[data$vera == "0"] <- NA
+data$vera <- ordered(data$vera)
 
 
 # mlib (dgree market liberalism)
 data <- data %>% 
-  mutate(mlib = ifelse(data$v_43 %in% c("1", "2"), "3", 
-                       ifelse(data$v_43 == "3", "2", 
-                              ifelse(data$v_43 %in% c("4", "5"), "1", NA))))
-data$mlib <- factor(data$mlib)
+  mutate(mlib = v_43)
+data$mlib[data$mlib == "0"] <- NA
+data$mlib <- ordered(data$mlib)
 
 write_feather(data, snakemake@output[["preprocessed_data"]])
