@@ -44,22 +44,22 @@ me$model_name <- ordered(
 )
 
 level_names <- c(
-    "30-39", "40-49", "50-59", "60+",
-    "yes",
-    "1-2", "3-4", "5-6", "7",
-    "yes",
+    sort(levels(imputed_data$age)[-1]),
+    sort(levels(imputed_data$chld)[-1]),
+    sort(levels(imputed_data$dfreq)[-1]),
+    sort(levels(imputed_data$dlic)[-1]),
     "Number",
-    "male",
-    "<10'000", "10-30'000", "30-50'000", "50-70'000", "70-100'000", "100-150'000", "150'000+",
-    "yes",
+    sort(levels(imputed_data$gen)[-1]),
+    sort(levels(imputed_data$inc)[-1]),
+    sort(levels(imputed_data$job)[-1]),
     "Number",
-    "semi-urban", "rural",
+    sort(levels(imputed_data$loc)[-1]),
     "Number",
     "Number",
-    "AfD", "CDU/CSU", "Die Grünen", "Die Linke", "FDP", "none/other",
+    sort(levels(imputed_data$ppref)[-1]),
     "Number",
-    "medium", "high",
-    "medium", "high"
+    sort(levels(imputed_data$wac)[-1]),
+    sort(levels(imputed_data$wev)[-1])
 )
 dimensions <- c(
     "Socio-demographics", "Socio-demographics", "Socio-demographics", "Socio-demographics",
@@ -69,7 +69,7 @@ dimensions <- c(
     "Values and beliefs",
     "Socio-demographics",
     "Socio-demographics", "Socio-demographics", "Socio-demographics", "Socio-demographics",
-    "Socio-demographics", "Socio-demographics", "Socio-demographics",
+    "Socio-demographics", "Socio-demographics",
     "Car-related factors",
     "Values and beliefs",
     "Socio-demographics", "Socio-demographics",
@@ -89,7 +89,7 @@ variable_names <- c(
     "Emotional attachment",
     "Gender \n(R: female)",
     "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)",
-    "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)",
+    "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)",
     "Job in car industry\n(R: no)",
     "Liberalism",
     "Location \n(R: urban)", "Location \n(R: urban)",

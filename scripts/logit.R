@@ -42,7 +42,7 @@ summary.glm(BLRmodel)
 basetable <- dust(BLRmodel) %>% 
   sprinkle(col = 1:4, round = 2) %>% 
   sprinkle(cols = 5, fn = quote(pvalString(value))) %>% 
-  sprinkle(rows = c(1:37), border_color = "black") %>%
+  sprinkle(rows = c(1:36), border_color = "black") %>%
   sprinkle_colnames("Term", "Coefficient", "SE", "z-value", "p-value") %>% 
   sprinkle_print_method("console")
 
@@ -147,7 +147,7 @@ ME.BLR.sum <- cbind(ME.BLR.sum, c(
     "Emotional attachment",
     "Gender \n(R: female)",
     "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)",
-    "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)",
+    "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)",
     "Job in car industry\n(R: no)",
     "Liberalism",
     "Location \n(R: urban)", "Location \n(R: urban)",
@@ -162,22 +162,22 @@ ME.BLR.sum <- cbind(ME.BLR.sum, c(
 
 
 ME.BLR.sum <- cbind(ME.BLR.sum, c(
-    "30-39", "40-49", "50-59", "60+",
-    "yes",
-    "1-2", "3-4", "5-6", "7",
-    "yes",
+    sort(levels(data.imputed$age)[-1]),
+    sort(levels(data.imputed$chld)[-1]),
+    sort(levels(data.imputed$dfreq)[-1]),
+    sort(levels(data.imputed$dlic)[-1]),
     "Number",
-    "male",
-    "<10'000", "10-30'000", "30-50'000", "50-70'000", "70-100'000", "100-150'000", "150'000+",
-    "yes",
+    sort(levels(data.imputed$gen)[-1]),
+    sort(levels(data.imputed$inc)[-1]),
+    sort(levels(data.imputed$job)[-1]),
     "Number",
-    "semi-urban", "rural",
+    sort(levels(data.imputed$loc)[-1]),
     "Number",
     "Number",
-    "AfD", "CDU/CSU", "Die Grünen", "Die Linke", "FDP", "none/other",
+    sort(levels(data.imputed$ppref)[-1]),
     "Number",
-    "medium", "high",
-    "medium", "high")
+    sort(levels(data.imputed$wac)[-1]),
+    sort(levels(data.imputed$wev)[-1]))
 )
 
 ME.BLR.sum <- cbind(ME.BLR.sum, c(
@@ -188,7 +188,7 @@ ME.BLR.sum <- cbind(ME.BLR.sum, c(
     "Values and beliefs",
     "Socio-demographics",
     "Socio-demographics", "Socio-demographics", "Socio-demographics", "Socio-demographics",
-    "Socio-demographics", "Socio-demographics", "Socio-demographics",
+    "Socio-demographics", "Socio-demographics",
     "Car-related factors",
     "Values and beliefs",
     "Socio-demographics", "Socio-demographics",
