@@ -10,6 +10,7 @@ rule all:
         "build/random-forest-variable-importance.png",
         "build/logistic-regression.png",
         "build/all-logistic-regressions.png",
+        "build/nofactor-regression.png",
         "build/treatment.png",
 
 
@@ -82,6 +83,17 @@ rule all_logistic_regressions:
         data = "build/all-logistic-regressions.feather"
     conda: "envs/default.yaml"
     script: "scripts/all_logits.R"
+
+
+rule no_factor_regrssion:
+    message: "Run a regression without factors derived as reference."
+    input:
+        data = "build/imputed.feather"
+    output:
+        plot = "build/nofactor-regression.png",
+        data = "build/nofactor-regression.feather"
+    conda: "envs/default.yaml"
+    script: "scripts/nofactor.R"
 
 
 rule treatments:
