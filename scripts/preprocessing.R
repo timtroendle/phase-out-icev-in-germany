@@ -68,10 +68,12 @@ data <- data %>% mutate(
     ncar = ndie + npet + nhyb + nele,
     nice = ndie + npet + nhyb,
     npice = ndie + npet,
-    wac_str  = case_when(v_79 == "1" ~ "low", v_79 == "0" ~ "medium", v_72 == "2" ~ "high"),
-    wev_str  = case_when(v_90 == "1" ~ "low", v_90 == "0" ~ "medium", v_82 == "2" ~ "high"),
-    wac = recode_factor(wac_str, "low" = "low", "medium" = "medium", "high" = "high", .ordered = TRUE),
-    wev = recode_factor(wev_str, "low" = "low", "medium" = "medium", "high" = "high", .ordered = TRUE),
+    wac_str  = case_when(v_79 == "1" ~ "none", v_79 == "0" ~ "conditional", v_72 == "2" ~ "unconditional"),
+    wev_str  = case_when(v_90 == "1" ~ "none", v_90 == "0" ~ "conditional", v_82 == "2" ~ "unconditional"),
+    wac = recode_factor(wac_str, "none" = "none", "conditional" = "conditional",
+                        "unconditional" = "unconditional", .ordered = TRUE),
+    wev = recode_factor(wev_str, "none" = "none", "conditional" = "conditional",
+                        "unconditional" = "unconditional", .ordered = TRUE),
 )
 
 ###################################### beliefs ########################################################################

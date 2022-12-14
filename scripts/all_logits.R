@@ -86,20 +86,20 @@ variable_names <- c(
     "Child(ren) \n(R: none)",
     "Weekly car use\n(R: 0)", "Weekly car use\n(R: 0)", "Weekly car use\n(R: 0)", "Weekly car use\n(R: 0)",
     "Driving license\n(R: no)",
-    "Emotional attachment",
+    "Emotional attachment (1-5)",
     "Gender \n(R: female)",
     "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)",
     "Income \n(R: <10'000 €)", "Income \n(R: <10'000 €)",
     "Job in car industry\n(R: no)",
-    "Liberalism",
+    "Liberalism (1-5)",
     "Location \n(R: urban)", "Location \n(R: urban)",
     "No. of pure ICEVs",
-    "Cultural/econ. significance",
+    "Cultural/econ. significance (1-5)",
     "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)",
     "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)", "Party pref. \n(R: SPD)",
-    "Problem attribution",
-    "Willingn. to abandon car\n(R: low)", "Willingn. to abandon car\n(R: low)",
-    "Willingn. to adopt EV\n(R: low)", "Willingn. to adopt EV\n(R: low)"
+    "Problem attribution (1-5)",
+    "Willingn. to abandon car\n(R: none)", "Willingn. to abandon car\n(R: none)",
+    "Willingn. to adopt EV\n(R: none)", "Willingn. to adopt EV\n(R: none)"
 )
 
 me$level <- rep(level_names, 4)
@@ -113,16 +113,16 @@ me$variable <- factor(me$variable, levels = c(
     "Gender \n(R: female)",
     "Income \n(R: <10'000 €)",
     "Child(ren) \n(R: none)",
-    "Willingn. to abandon car\n(R: low)",
-    "Willingn. to adopt EV\n(R: low)",
+    "Willingn. to abandon car\n(R: none)",
+    "Willingn. to adopt EV\n(R: none)",
     "Weekly car use\n(R: 0)",
     "No. of pure ICEVs",
     "Driving license\n(R: no)",
     "Job in car industry\n(R: no)",
-    "Problem attribution",
-    "Liberalism",
-    "Emotional attachment",
-    "Cultural/econ. significance"
+    "Problem attribution (1-5)",
+    "Liberalism (1-5)",
+    "Emotional attachment (1-5)",
+    "Cultural/econ. significance (1-5)"
 ))
 
 me$dimension <- factor(
