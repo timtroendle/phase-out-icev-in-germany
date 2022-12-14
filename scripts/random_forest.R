@@ -46,11 +46,24 @@ imp$Category <- as.factor(c("1) Socio-demographics and politics", "1) Socio-demo
                             "2) Context and habits"))
 
 # order so that they are displayed as most to least important variables per category
-imp$Variable <- factor(imp$Variable, levels = c("Child(ren)", "Gender", "Income",  "Age", "Location", "Party pref.",
-                                                "Job in car industry", "Weekly car use", "No. of pure ICEVs", "Driving license",
-                                                "Willingn. to adopt EV", "Willingn. to abandon car",
-                                                "Liberalism", "Cultural/econ. significance", "Emotional attachment",
-                                                "Problem attribution"))
+imp$Variable <- factor(imp$Variable, levels = c(
+    "Child(ren)",
+    "Income",
+    "Gender",
+    "Age",
+    "Location",
+    "Party pref.",
+    "Job in car industry",
+    "Driving license",
+    "No. of pure ICEVs",
+    "Weekly car use",
+    "Willingn. to adopt EV",
+    "Willingn. to abandon car",
+    "Cultural/econ. significance",
+    "Emotional attachment",
+    "Liberalism",
+    "Problem attribution"
+))
 imp$Category <- factor(
     imp$Category,
     levels = c("1) Socio-demographics and politics", "2) Context and habits", "3) Values and beliefs")

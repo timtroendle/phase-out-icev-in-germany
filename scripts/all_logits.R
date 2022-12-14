@@ -107,20 +107,24 @@ me$dimension <- rep(dimensions, 4)
 me$variable <- rep(variable_names, 4)
 
 me$variable <- factor(me$variable, levels = c(
-    "Party pref. \n(R: SPD)", "Location \n(R: urban)", "Age \n(R: <30y)", "Income \n(R: <10'000 €)",
-    "Gender \n(R: female)", "Child(ren) \n(R: none)", "Willingn. to adopt EV\n(R: low)",
-    "Willingn. to abandon car\n(R: low)", "No. of pure ICEVs", "Driving license\n(R: no)",
-    "Weekly car use\n(R: 0)", "Job in car industry\n(R: no)", "Problem attribution",
-    "Emotional attachment", "Cultural/econ. significance",
-    "Liberalism")
-)
-# TODO uncomment
-# me$level <- factor(me$level, levels = c(
-#    "none/other", "AfD", "Die Linke", "FDP", "Die Grünen", "CDU/CSU",
-#    "rural", "semi-urban", "60+", "50-59", "40-49", "30-39", "<30",
-#    "100'000+", "50-100'000", "30-50'000", "yes", "male", "high", "Number",
-#    "medium", "7", "5-6", "3-4", "1-2")
-# )
+    "Party pref. \n(R: SPD)",
+    "Location \n(R: urban)",
+    "Age \n(R: <30y)",
+    "Gender \n(R: female)",
+    "Income \n(R: <10'000 €)",
+    "Child(ren) \n(R: none)",
+    "Willingn. to abandon car\n(R: low)",
+    "Willingn. to adopt EV\n(R: low)",
+    "Weekly car use\n(R: 0)",
+    "No. of pure ICEVs",
+    "Driving license\n(R: no)",
+    "Job in car industry\n(R: no)",
+    "Problem attribution",
+    "Liberalism",
+    "Emotional attachment",
+    "Cultural/econ. significance"
+))
+
 me$dimension <- factor(
     me$dimension,
     levels = c("Socio-demographics", "Car-related factors", "Values and beliefs")

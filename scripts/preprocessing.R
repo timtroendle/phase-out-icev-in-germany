@@ -48,8 +48,8 @@ data <- data %>% mutate(
     loc = recode_factor(v_2, `1` = "urban", `2` = "semi-urban", `3` = "rural", .ordered = FALSE),
     chldn = recode(v_4, `1` = 0, `2` = 1, `3` = 2, `4` = 3, `5` = 5, `6` = 5),
     chld = recode_factor(v_4, `1` = "no", `2` = "yes", `3` = "yes", `4` = "yes", `5` = "yes", `6` = "yes"),
-    inc = recode_factor(v_5, `1` = "<10'000", `2` = "10-30'000", `3` = "30-50'000", `4` = "50-70'000",
-                        `5` = "70-100'000", `6` = "100-150'000", `7` = "150'000+", .ordered = TRUE),
+    inc = recode_factor(v_5, `1` = "1: <10'000", `2` = "2: 10-30'000", `3` = "3: 30-50'000", `4` = "4: 50-70'000",
+                        `5` = "5: 70-100'000", `6` = "6: 100-150'000", `7` = "7: 150'000+", .ordered = TRUE),
     ppref = recode_factor(v_6, `2` = "SPD", `1` = "CDU/CSU", `3` = "Die Grünen", `4` = "Die Linke",
                           `5` = "FDP", `6` = "AfD", `7` = "none/other", .ordered = FALSE),
     gen = recode_factor(v_3, `2` = "female", `3` = "female", `1` = "male", , .ordered = FALSE)
