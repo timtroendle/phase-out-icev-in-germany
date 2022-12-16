@@ -46,6 +46,7 @@ basetable <- dust(BLRmodel) %>%
   sprinkle_colnames("Term", "Coefficient", "SE", "z-value", "p-value") %>% 
   sprinkle_print_method("console")
 
+capture.output(print(basetable), file = snakemake@output[["coefficients"]])
 basetable
 
 # coefficients

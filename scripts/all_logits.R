@@ -1,6 +1,9 @@
 # Fit all possible four binary logits to data and plot marginal means.
+install.packages("pixiedust", repos = "https://stat.ethz.ch/CRAN/") # cannot be installed using conda at this point
 
 library(arrow)
+library(dplyr)
+library(pixiedust)
 library(margins)
 library(ggplot2)
 
@@ -27,6 +30,23 @@ me1 <- summary(margins(fit1))
 me2 <- summary(margins(fit2))
 me3 <- summary(margins(fit3))
 me4 <- summary(margins(fit4))
+
+
+write_coefficients <- function(fit, path_to_file) {
+    basetable <- dust(fit) %>%
+        sprinkle(col = 1:4, round = 2) %>%
+        sprinkle(cols = 5, fn = quote(pvalString(value))) %>%
+        sprinkle(rows = c(1:36), border_color = "black") %>%
+        sprinkle_colnames("Term", "Coefficient", "SE", "z-value", "p-value") %>%
+        sprinkle_print_method("console")
+
+    capture.output(print(basetable), file = path_to_file)
+}
+
+write_coefficients(fit1, snakemake@output[["coefficients1"]])
+write_coefficients(fit2, snakemake@output[["coefficients2"]])
+write_coefficients(fit3, snakemake@output[["coefficients3"]])
+write_coefficients(fit4, snakemake@output[["coefficients4"]])
 
 # Prepare plotting
 

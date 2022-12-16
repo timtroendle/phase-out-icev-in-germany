@@ -67,7 +67,8 @@ rule logistic_regression:
         colours = config["colours"]
     output:
         plot = "build/logistic-regression.png",
-        summary = "build/logistic-regression.feather"
+        summary = "build/logistic-regression.feather",
+        coefficients = "build/logistic-regression.txt"
     conda: "envs/default.yaml"
     script: "scripts/logit.R"
 
@@ -80,7 +81,11 @@ rule all_logistic_regressions:
         colours = config["colours"]
     output:
         plot = "build/all-logistic-regressions.png",
-        data = "build/all-logistic-regressions.feather"
+        data = "build/all-logistic-regressions.feather",
+        coefficients1 = "build/all-logistic-regressions1.txt",
+        coefficients2 = "build/all-logistic-regressions2.txt",
+        coefficients3 = "build/all-logistic-regressions3.txt",
+        coefficients4 = "build/all-logistic-regressions4.txt",
     conda: "envs/default.yaml"
     script: "scripts/all_logits.R"
 
