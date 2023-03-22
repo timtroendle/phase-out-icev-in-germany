@@ -1,0 +1,8 @@
+name: default-py
+channels:
+    - conda-forge
+dependencies:
+    - python=3.11
+    - numpy=1.24.1
+    - pandas=1.5.2
+    - pyarrow=11.0.0

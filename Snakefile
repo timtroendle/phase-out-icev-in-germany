@@ -13,7 +13,8 @@ rule all:
         "build/nofactor-regression.png",
         "build/treatment.png",
         "build/policy-instrument-p-values-accept.csv",
-        "build/policy-instrument-p-values-approve.csv"
+        "build/policy-instrument-p-values-approve.csv",
+        "build/sample-vs-population.csv"
 
 
 rule preprocess:
@@ -126,6 +127,34 @@ rule policy_instruments:
         "envs/default.yaml"
     script:
         "scripts/policy_instruments.R"
+
+
+rule census_data:
+    message: "Download zensus data to compare our sample against."
+    params:
+        url = config["data-sources"]["census"]
+    output:
+        zip = temp("data/automatic/raw-census.zip"),
+        csv = protected("data/automatic/Zensus11_Datensatz_Bevoelkerung.csv")
+    shadow:
+        "minimal"
+    shell: """
+        curl -sLo {output.zip} '{params.url}'
+        unzip -o {output.zip} -d data/automatic
+        """
+
+
+rule sample_vs_population:
+    message: "Compare sample to population."
+    input:
+        sample = "build/preprocessed.feather",
+        population = rules.census_data.output.csv
+    output:
+        "build/sample-vs-population.csv"
+    conda:
+        "envs/default-py.yaml"
+    script:
+        "scripts/sample.py"
 
 
 rule dag:

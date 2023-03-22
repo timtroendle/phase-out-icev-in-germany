@@ -1,4 +1,6 @@
 # The right place for all your configuration values.
+data-sources:
+    census: https://www.zensus2011.de/SharedDocs/Downloads/DE/Pressemitteilung/DemografischeGrunddaten/csv_Bevoelkerung.zip?__blob=publicationFile&v=2
 colours:
     - "#09306B"
     - "#2271B5"
