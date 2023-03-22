@@ -1,4 +1,5 @@
 install.packages("pixiedust", repos = "https://stat.ethz.ch/CRAN/") # cannot be installed using conda at this point
+install.packages("Hmisc", repos = "https://stat.ethz.ch/CRAN/") # cannot be installed using conda at this point
 
 # load packages
 library(arrow)
