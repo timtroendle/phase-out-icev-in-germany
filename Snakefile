@@ -12,6 +12,8 @@ rule all:
         "build/all-logistic-regressions.png",
         "build/nofactor-regression.png",
         "build/treatment.png",
+        "build/policy-instrument-p-values-accept.csv",
+        "build/policy-instrument-p-values-approve.csv"
 
 
 rule preprocess:
@@ -111,6 +113,19 @@ rule treatments:
         plot = "build/treatment.png"
     conda: "envs/default.yaml"
     script: "scripts/treatments.R"
+
+
+rule policy_instruments:
+    message: "Test difference between policy instrument ratings."
+    input:
+        data = "build/preprocessed.feather"
+    output:
+        accept = "build/policy-instrument-p-values-accept.csv",
+        approve = "build/policy-instrument-p-values-approve.csv",
+    conda:
+        "envs/default.yaml"
+    script:
+        "scripts/policy_instruments.R"
 
 
 rule dag:

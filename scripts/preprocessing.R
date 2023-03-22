@@ -13,7 +13,8 @@ data <- data %>%
   dplyr::select(c(lfdn, p_0001, v_17, v_16, v_114, v_2, v_4, v_5, v_6, v_3, v_7, v_8, v_9, v_102,
                   v_104, v_106, v_108, v_18, v_19, v_20, v_21, v_22, v_23, v_24, v_72, v_73, v_74,
                   v_75, v_76, v_77, v_80, v_79, v_82, v_83, v_84, v_85, v_86, v_88, v_90, v_43, v_44,
-                  v_45, v_46, v_47, v_48, v_49, v_91, v_51, v_52, v_53, c_0001, v_92, v_96, v_100))
+                  v_45, v_46, v_47, v_48, v_49, v_91, v_51, v_52, v_53, c_0001, v_92, v_96, v_100,
+                  v_54, v_56, v_57, v_58, v_59, v_60, v_112, v_62))
 
 # download dataset with only relevant set of variables, for figshare
 write_xlsx(data, snakemake@output[["figshare_data"]])
