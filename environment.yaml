@@ -3,6 +3,8 @@ channels:
     - conda-forge
     - bioconda
 dependencies:
-    - python=3.10
-    - flake8=3.8.3
-    - snakemake-minimal=7.8.5
+    - python=3.11
+    - flake8=6.0.0
+    - snakemake-minimal=7.19.1
+variables:
+    SNAKEMAKE_PROFILE: ./profiles/default
