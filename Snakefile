@@ -10,6 +10,7 @@ rule all:
         "build/random-forest-variable-importance.png",
         "build/logistic-regression.png",
         "build/all-logistic-regressions.png",
+        "build/ordinal-regressions.png",
         "build/nofactor-regression.png",
         "build/treatment.png",
         "build/policy-instrument-p-values-accept.csv",
@@ -93,7 +94,22 @@ rule all_logistic_regressions:
     script: "scripts/all_logits.R"
 
 
-rule no_factor_regrssion:
+rule ordinal_regression:
+    message: "Build and plot ordinal regression model."
+    input:
+        imputed_data = "build/imputed-and-factors.feather",
+    params:
+        colours = config["colours"]
+    output:
+        plot = "build/ordinal-regressions.png",
+        ame = "build/ordinal-regressions.feather",
+        coefficients = "build/ordinal-regressions.txt",
+        brant = "build/ordinal-regression-brant.csv"
+    conda: "envs/default.yaml"
+    script: "scripts/ologit.R"
+
+
+rule no_factor_regression:
     message: "Run a regression without factors derived as reference."
     input:
         data = "build/imputed.feather"

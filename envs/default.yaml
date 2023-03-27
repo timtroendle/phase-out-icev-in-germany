@@ -14,6 +14,8 @@ dependencies:
     - r-margins=0.3.26
     - r-mfx=1.2_2
     - r-gmodels=2.18.1
+    - r-mass=7.3_58.3
+    - r-marginaleffects=0.11.0
     - r-ggpubr=0.4.0
     - r-rstatix=0.7.0
     - r-broom=1.0.0
