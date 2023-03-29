@@ -10,7 +10,7 @@ rule all:
         "build/random-forest-variable-importance.png",
         "build/logistic-regression.png",
         "build/all-logistic-regressions.png",
-        "build/ordinal-regressions.png",
+        "build/ordinal-regression.png",
         "build/nofactor-regression.png",
         "build/treatment.png",
         "build/policy-instrument-p-values-accept.csv",
@@ -101,9 +101,10 @@ rule ordinal_regression:
     params:
         colours = config["colours"]
     output:
-        plot = "build/ordinal-regressions.png",
-        ame = "build/ordinal-regressions.feather",
-        coefficients = "build/ordinal-regressions.txt",
+        plot = "build/ordinal-regression.png",
+        ame = "build/ordinal-regression.feather",
+        coefficients = "build/ordinal-regression.txt",
+        significance = "build/ordinal-regression-paramter-significance.csv",
         brant = "build/ordinal-regression-brant.csv"
     conda: "envs/default.yaml"
     script: "scripts/ologit.R"

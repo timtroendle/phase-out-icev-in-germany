@@ -23,6 +23,9 @@ basetable <- dust(olr_model) %>%
 
 capture.output(print(basetable), file = snakemake@output[["coefficients"]])
 
+parameter_significance <- as.data.frame(drop1(olr_model, test = "Chisq"))
+write.csv(parameter_significance, snakemake@output[["significance"]])
+
 # Perform Brant test for parallel regression assumptions
 brant_coefs <- brant(olr_model, by.var = FALSE)
 write.csv(brant_coefs, snakemake@output[["brant"]])
