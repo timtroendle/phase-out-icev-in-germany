@@ -2,13 +2,19 @@
 
 A cross-sectional survey of German citizens on their attitudes towards an ICEV phase-out.
 
-This repository contains the code and raw data to reproduce the findings. The philosophy behind this repository is that no intermediary results are included, but all results are computed from raw data and code.
+This repository contains the code to reproduce the findings. The philosophy behind this repository is that no intermediary results are included, but all results are computed from raw data and code.
 
 ## Getting ready
 
 You need [mamba](https://mamba.readthedocs.io/en/latest/) to run the analysis. Using mamba, you can create an environment from within you can run it:
 
     mamba env create -f environment.yaml --no-default-packages
+
+You need the following raw data files which are not provided in this repository:
+
+* data/Survey_data.csv
+* data/Survey_data_follow_up.csv
+* data/tic_matched3.xslx
 
 ## Run the analysis
 

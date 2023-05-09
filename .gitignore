@@ -2,6 +2,8 @@
 build/
 Rplots.pdf
 data/automatic
+data/*.csv
+data/*.xlsx
 
 notebooks
 
