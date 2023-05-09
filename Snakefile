@@ -187,15 +187,6 @@ rule dag:
          """
 
 
-rule push:
-    message: "Copy entire build to push folder."
-    params: push_directory = config["push-directory"]
-    shell:
-        """
-        cp -r build/*.* {params.push_directory}
-        """
-
-
 rule clean: # removes all generated results
     message: "Remove all build results but keep downloaded data."
     run:

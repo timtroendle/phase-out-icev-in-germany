@@ -1,4 +1,4 @@
-Copyright (c) 2021--2022 ETH Zurich, Janna Hoppe, Tim Tröndle
+Copyright (c) 2021--2023 ETH Zurich, Janna Hoppe, Tim Tröndle
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
